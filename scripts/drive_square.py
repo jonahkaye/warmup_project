@@ -17,12 +17,12 @@ class DriveSquares(object):
 
         r =rospy.Rate(2)
         while not rospy.is_shutdown():
-            my_twist.linear.x = 1
+            my_twist.linear.x = 0.5
             my_twist.angular.z = 0
             current_angle = 0
             self.velocity_publisher.publish(my_twist)
 
-            t_end = rospy.Time.now().to_sec() + 15
+            t_end = rospy.Time.now().to_sec() + 2
             while rospy.Time.now().to_sec() < t_end:
                 pass # wait and do nothing
             my_twist.angular.z = angular_speed
@@ -30,7 +30,7 @@ class DriveSquares(object):
             self.velocity_publisher.publish(my_twist)
 
             t0 = rospy.Time.now().to_sec()    
-            while (current_angle < right_angle):
+            while (current_angle <= right_angle):
                 self.velocity_publisher.publish(my_twist)
                 t1 = rospy.Time.now().to_sec()
                 current_angle = angular_speed * (t1-t0)
