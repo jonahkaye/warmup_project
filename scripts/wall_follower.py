@@ -5,10 +5,12 @@ import math
 from geometry_msgs.msg import Twist, Vector3
 from sensor_msgs.msg import LaserScan
 
-class PersonFollower(object):
+straight_bool = 0 
+
+class WallFollower(object):
     def __init__(self):
         # Start rospy node.
-        rospy.init_node("follow_person")
+        rospy.init_node("follow_wall")
         # Declare our node as a subscriber to the scan topic and
         #   set self.process_scan as the function to be used for callback.
         rospy.Subscriber("/scan", LaserScan, self.distance)
@@ -21,28 +23,27 @@ class PersonFollower(object):
 
     def distance(self,msg):
 
-        closest = math.inf
-        deg = 0
-        for i in range(len(msg.ranges)):
-            if msg.ranges[i] < closest:
-                deg = i
-                closest =  msg.ranges[i]
+        closest = msg.ranges[90]
 
-        #turn to the farthest degree 
-
-        #angular_speed = 5*2*math.pi/360  
-        current_angle = 0 
-        if deg not in [359,0,1]: #  The turtlebot turns left
-            if deg < 180:
-                self.my_twist.angular.z = deg/360 * 5
-            if deg >= 180:
-                self.my_twist.angular.z = -deg/360 * 5
+        LorR = -1 
+        if msg.ranges[90] < msg.ranges[270]:
+            LorR = -1
         else:
-            self.my_twist.angular.z = 0
+            LorR = 1
+        
+        if msg.ranges[0] < 0.75 and msg.ranges[45] < 0.5:
+            straight_bool = 0
+        else:
+            straight_bool = 1
+        
+        if straight_bool: # angular controls
+            self.my_twist.angular.z = (closest - 0.5) * 0.1
+        else:
+            self.my_twist.angular.z = LorR * 0.1
 
-        if closest > 0.5 and closest < 3.5:
-            self.my_twist.linear.x = 0.5
-        elif closest < 0.5:
+        if straight_bool: # linear controls 
+            self.my_twist.linear.x = 0.2
+        else:
             self.my_twist.linear.x = 0
             
         self.twist_pub.publish(self.my_twist)
@@ -51,6 +52,6 @@ class PersonFollower(object):
         rospy.spin()
 
 if __name__ == '__main__':
-    # Declare a node and run it.
-    node = PersonFollower()
+    # Declare a node
+    node = WallFollower()
     node.run()
