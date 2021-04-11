@@ -44,7 +44,7 @@ TAKEAWAYS:
 *The biggest takeaways were definetly about separating linear and angular velocity setting so that the robots movement could be smooth, learning how to use the scan rostopic, and learning how to do object oriented programming better. 
 *I also got to use PID, which was good practice implementing what we recently did in class. 
 
-![drivesquare](https://github.com/jonahkaye/warmup_project/blob/main/scripts/person_follower.gif)
+![drivesquare](https://github.com/jonahkaye/warmup_project/blob/main/scripts/person_follower2.gif)
 
 WALL FOLLOWER: 
 
