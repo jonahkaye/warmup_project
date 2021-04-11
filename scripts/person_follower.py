@@ -23,16 +23,13 @@ class PersonFollower(object):
 
         closest = math.inf
         deg = 0
-        for i in range(len(msg.ranges)):
+        for i in range(len(msg.ranges)): # find the angle closest to the object, and record the angle and that distance
             if msg.ranges[i] < closest:
                 deg = i
                 closest =  msg.ranges[i]
 
-        #turn to the farthest degree 
-
-        #angular_speed = 5*2*math.pi/360  
         current_angle = 0 
-        if deg not in [359,0,1]: #  The turtlebot turns left
+        if deg not in [359,0,1]: #  Turn the turtlebot to the angle closest to the object, either left or right, if the object isnt right in front of the robot
             if deg < 180:
                 self.my_twist.angular.z = deg/360 * 5
             if deg >= 180:
@@ -40,14 +37,14 @@ class PersonFollower(object):
         else:
             self.my_twist.angular.z = 0
 
-        if closest > 0.5 and closest < 3.5:
+        if closest > 0.5 and closest < 3.5: # Set a positive linear velocity if the object isnt too close to the robot. 
             self.my_twist.linear.x = 0.5
         elif closest < 0.5:
             self.my_twist.linear.x = 0
             
         self.twist_pub.publish(self.my_twist)
 
-    def run(self):
+    def run(self): # Run 
         rospy.spin()
 
 if __name__ == '__main__':
