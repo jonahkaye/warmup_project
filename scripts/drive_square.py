@@ -10,7 +10,8 @@ angular_speed = 10*2*PI/360
 class DriveSquares(object):
     def __init__(self): # Initializing the Ros Publisher 
         rospy.init_node('drive_squares')
-        self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=10) 
+        self.velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        rospy.sleep(1) 
 
     def run(self): # Function that generates the square movement pattern of the turtlebot 
         my_twist = Twist()
