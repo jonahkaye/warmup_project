@@ -26,29 +26,29 @@ class WallFollower(object):
         closest = msg.ranges[90]
 
         LorR = -1 
-        if msg.ranges[90] < msg.ranges[270]:
+        if msg.ranges[90] < msg.ranges[270]: #Set a variable that will make the robot turn to the left or right depending on which way it is travelling up the wall. 
             LorR = -1
         else:
             LorR = 1
         
-        if msg.ranges[0] < 0.75 and msg.ranges[45] < 0.5:
+        if msg.ranges[0] < 0.75 and msg.ranges[45] < 0.5: #Set the global boolean to be false if at a corner, and true otherwise
             straight_bool = 0
         else:
             straight_bool = 1
         
-        if straight_bool: # angular controls
+        if straight_bool: # angular controls. Use PID if in wall following phase, and otherwise turn 90 degrees 
             self.my_twist.angular.z = (closest - 0.5) * 0.1
         else:
             self.my_twist.angular.z = LorR * 0.1
 
-        if straight_bool: # linear controls 
+        if straight_bool: # linear controls. Move forward if in wall following phase 
             self.my_twist.linear.x = 0.2
         else:
             self.my_twist.linear.x = 0
             
         self.twist_pub.publish(self.my_twist)
 
-    def run(self):
+    def run(self): #run 
         rospy.spin()
 
 if __name__ == '__main__':

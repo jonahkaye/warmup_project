@@ -8,7 +8,7 @@ CHALLENGES:
 
 To be honest, I struggled a lot with getting Gazebo to work and the NoMachine, which has been really buggy for me, to work. I struggled for a little bit with adjusting the speed of the robot and playing with the angular speed so that it would actually get close to making the angular turns and not run past them and turn to far. 
 
-I also am still sorf of figuring out object-oriented programming, so writing code like that is still a bit of an adjustment for me. 
+I also am still sort of figuring out object-oriented programming, so writing code like that is still a bit of an adjustment for me. 
 
 FUTURE WORK: 
 
@@ -62,9 +62,9 @@ FUTURE WORK:
 
 I would optimize the intitial process to find the first wall. My code works because the robot will just drive forward with an angular velocity when it is stuck in the middle of the room, and then enter the wall following phase. There is a weird bug where the robot does a double turn, and with more time I would try to fix it. I might try creating a third value for the global variable for a new wall finding phase. 
 
-TAKEAWAYS:
+TAKEAWAY
 
 * Using a global variable to switch between different phases of the robots movement. This is essentially like breaking the problem in two, and solving them seperately, which I thought was a good methodology.
 * Again, separating the angular and linear processes was a good methodology that allowed the robot to travel more smoothely as it can simaltaneously use PID to alter the angular while mooving forward. 
 
-![drivesquare](https://github.com/jonahkaye/warmup_project/blob/main/scripts/wall_follwer.gif)
+![drivesquare](https://github.com/jonahkaye/warmup_project/blob/main/scripts/wall_follower.gif)
